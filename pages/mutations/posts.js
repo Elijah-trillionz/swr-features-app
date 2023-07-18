@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import { restAPI } from '../../utils';
 
 const Posts = () => {
   const {
@@ -7,7 +8,7 @@ const Posts = () => {
     isLoading,
     error: isError,
     mutate,
-  } = useSWR('http://localhost:5000/api/posts', (url) =>
+  } = useSWR(`${restAPI}/api/posts`, (url) =>
     fetch(url).then((res) => res.json())
   );
 
@@ -21,7 +22,7 @@ const Posts = () => {
     if (!postTitle || !postBody) return;
 
     const addNewPost = async () => {
-      const res = await fetch('http://localhost:5000/api/post/new', {
+      const res = await fetch(`${restAPI}/api/post/new`, {
         method: 'post',
         headers: {
           'content-type': 'application/json',
